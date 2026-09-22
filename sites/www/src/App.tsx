@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import AgnamoHeader from "./components/AgnamoHeader";
 import { Nav } from "./components/Nav";
+import { isVelouriHost } from "./lib/host";
 import About from "./pages/About";
 import Data from "./pages/Data";
 import Docs from "./pages/Docs";
@@ -13,14 +15,26 @@ import Settings from "./pages/Settings";
 import Terms from "./pages/Terms";
 import Velouri from "./pages/Velouri";
 
+const VELOURI_TITLE = "Velouri";
+const VELOURI_DESCRIPTION =
+  "Velouri — the companion stage that renders the Agna gallery in three dimensions.";
+
 export default function App() {
+  const velouriHost = isVelouriHost();
+
+  useEffect(() => {
+    if (!velouriHost) return;
+    document.title = VELOURI_TITLE;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", VELOURI_DESCRIPTION);
+  }, [velouriHost]);
+
   return (
     <div className="app-shell">
       <AgnamoHeader />
       <Nav />
       <main className="app-main">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={velouriHost ? <Navigate to="/velouri" replace /> : <Home />} />
           <Route path="/velouri" element={<Velouri />} />
           <Route path="/plugins" element={<Plugins />} />
           <Route path="/docs" element={<Docs />} />
@@ -32,7 +46,7 @@ export default function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/data" element={<Data />} />
           <Route path="/about" element={<About />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to={velouriHost ? "/velouri" : "/"} replace />} />
         </Routes>
       </main>
     </div>

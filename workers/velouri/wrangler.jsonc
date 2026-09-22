@@ -1,6 +1,8 @@
 /**
- * Worker B — serves the same built SPA at velouri.agnamo.com, redirecting
- * "/" to "/velouri" so the domain lands directly on the Velouri stage.
+ * Worker B — serves the same built SPA at velouri.agnamo.com.
+ * run_worker_first is required so "/" is redirected to "/velouri" instead of
+ * Cloudflare serving index.html (titled Agna) before this script runs.
+ * HTML responses are retitled Velouri in src/index.ts.
  * Pattern ported from canvas-two/wrangler.jsonc (the "flow" worker).
  * For more details: https://developers.cloudflare.com/workers/wrangler/configuration/
  */
@@ -12,7 +14,8 @@
   "assets": {
     "directory": "../../sites/www/dist",
     "binding": "ASSETS",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    "run_worker_first": true
   },
   "routes": [
     { "pattern": "velouri.agnamo.com", "custom_domain": true }
