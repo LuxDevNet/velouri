@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { isVelouriHost } from "../lib/host";
+
 // The shared Agnamo cross-app header, ported from agnamo.com's own public/app.js
 // (renderTopNav) + public/styles.css (.topbar rules) — same pattern used by the
 // `flow` app in canvas-two. This app shows its own brand ("Agna" on
@@ -33,10 +35,7 @@ const FALLBACK_TILES: Tile[] = [
 ];
 
 function ownSlug(): "agna" | "velouri" {
-  if (typeof window !== "undefined" && window.location.hostname.startsWith("velouri.")) {
-    return "velouri";
-  }
-  return "agna";
+  return isVelouriHost() ? "velouri" : "agna";
 }
 
 export default function AgnamoHeader() {

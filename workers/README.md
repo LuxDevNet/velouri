@@ -5,8 +5,10 @@ Two workers, both serving the one `sites/www` SPA build, on two custom domains:
 - **`workers/agna`** → `agna.agnamo.com` — the main app. Also proxies `/v1/*` and
   `/mcp` to the Supabase function origin, so the public domain works as
   `settings.apiBase` out of the box (no CORS hop needed for same-origin calls).
-- **`workers/velouri`** → `velouri.agnamo.com` — the same build, redirecting `/` to
-  `/velouri` so the domain lands directly on the stage.
+- **`workers/velouri`** → `velouri.agnamo.com` — the same build. `run_worker_first`
+  is required: otherwise Cloudflare serves `index.html` for `/` and the Worker
+  never runs, so the host returns HTTP 200 with `<title>Agna</title>`. With the
+  flag, `/` redirects to `/velouri` and HTML responses are retitled **Velouri**.
 
 Config pattern ported from `canvas-two/wrangler.jsonc` (the `flow` worker): Cloudflare
 Workers **assets** mode (`assets.directory` + `not_found_handling:
@@ -25,7 +27,7 @@ cd ../../workers/agna
 npm install
 npx wrangler deploy
 
-# 3. Deploy Velouri (serves the SPA, redirects "/" to "/velouri").
+# 3. Deploy Velouri (redirects "/" to "/velouri" and retitles HTML to Velouri).
 cd ../velouri
 npm install
 npx wrangler deploy
@@ -37,9 +39,10 @@ npx wrangler deploy
 
 ## Blockers / what this pass did not do
 
-- **No `wrangler deploy` was run.** This session had no Cloudflare credentials, so
-  both workers are configured but not live. `agna.agnamo.com` and
-  `velouri.agnamo.com` do not resolve yet.
+- **The Velouri branding fix still needs `wrangler deploy`.** The `velouri` worker
+  is already on the account and `velouri.agnamo.com` resolves, but this session
+  had no Wrangler credentials (`npx wrangler whoami` was unauthenticated). Deploy
+  with the commands above. Do not add a zone route `*agnamo.com/*`.
 - **No tile was registered on the live `agnamo.com` hub.** The cross-app header
   (`sites/www/src/components/AgnamoHeader.tsx`, ported from
   `canvas-two/src/components/layout/AgnamoHeader.tsx`) fetches

@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 
+import { isVelouriHost } from "../lib/host";
+
 const LINKS: { to: string; label: string }[] = [
   { to: "/", label: "Home" },
   { to: "/velouri", label: "Velouri" },
@@ -9,13 +11,16 @@ const LINKS: { to: string; label: string }[] = [
 ];
 
 export function Nav() {
+  const velouriHost = isVelouriHost();
+  const links = velouriHost ? LINKS.filter((link) => link.to !== "/") : LINKS;
+
   return (
     <header className="topnav">
-      <NavLink to="/" className="brand mono">
-        AGNA
+      <NavLink to={velouriHost ? "/velouri" : "/"} className="brand mono">
+        {velouriHost ? "VELOURI" : "AGNA"}
       </NavLink>
       <nav aria-label="Primary">
-        {LINKS.map((link) => (
+        {links.map((link) => (
           <NavLink
             key={link.to}
             to={link.to}
