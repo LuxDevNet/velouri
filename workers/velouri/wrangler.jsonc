@@ -1,0 +1,20 @@
+/**
+ * Worker B — serves the same built SPA at velouri.agnamo.com, redirecting
+ * "/" to "/velouri" so the domain lands directly on the Velouri stage.
+ * Pattern ported from canvas-two/wrangler.jsonc (the "flow" worker).
+ * For more details: https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "velouri",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-09-23",
+  "assets": {
+    "directory": "../../sites/www/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    { "pattern": "velouri.agnamo.com", "custom_domain": true }
+  ]
+}

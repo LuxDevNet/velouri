@@ -1,0 +1,577 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(120% 140% at 50% -10%, var(--chamber) 0%, var(--well) 70%);
+  color: var(--specular);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.muted {
+  color: color-mix(in srgb, var(--specular) 55%, transparent);
+}
+
+/* ---------------------------------------------------------------------- */
+/* App shell + nav                                                         */
+/* ---------------------------------------------------------------------- */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  background: color-mix(in srgb, var(--well) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid color-mix(in srgb, var(--gelatin) 18%, transparent);
+}
+
+.topnav .brand {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  color: var(--tungsten);
+}
+
+.topnav nav {
+  display: flex;
+  gap: 22px;
+}
+
+.navlink {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  color: var(--gelatin);
+  opacity: 0.75;
+  transition: opacity 0.2s var(--depth-ease), color 0.2s var(--depth-ease);
+}
+
+.navlink:hover,
+.navlink-active {
+  opacity: 1;
+  color: var(--specular);
+}
+
+.app-main {
+  flex: 1;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Viewfinder chrome — corner ticks, the one signature device             */
+/* ---------------------------------------------------------------------- */
+
+.viewfinder {
+  position: fixed;
+  inset: 68px 18px 18px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.viewfinder .tick {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-color: color-mix(in srgb, var(--tungsten) 70%, transparent);
+  border-style: solid;
+  border-width: 0;
+  opacity: 0.55;
+}
+
+.tick-tl {
+  top: 0;
+  left: 0;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+.tick-tr {
+  top: 0;
+  right: 0;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+.tick-bl {
+  bottom: 0;
+  left: 0;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+.tick-br {
+  bottom: 0;
+  right: 0;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+}
+
+.viewfinder-label {
+  position: absolute;
+  bottom: 0;
+  left: 32px;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--mercury);
+  opacity: 0.7;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Cinematic scenes (Home, Plugins, Docs)                                  */
+/* ---------------------------------------------------------------------- */
+
+.scene {
+  position: relative;
+  padding: 96px 28px 64px;
+  max-width: 1120px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.home-scene {
+  min-height: calc(100vh - 68px);
+  display: flex;
+  align-items: center;
+}
+
+.depth-layer {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(0px);
+  will-change: transform;
+  transition: transform 0.05s linear;
+}
+
+.depth-layer[data-depth="1"] {
+  width: 60vw;
+  height: 60vw;
+  max-width: 640px;
+  max-height: 640px;
+  top: -10%;
+  left: -10%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--mercury) 22%, transparent), transparent 70%);
+  filter: blur(2px);
+}
+.depth-layer[data-depth="2"] {
+  width: 40vw;
+  height: 40vw;
+  max-width: 420px;
+  max-height: 420px;
+  bottom: -8%;
+  right: -6%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--tungsten) 20%, transparent), transparent 70%);
+  filter: blur(1px);
+}
+.depth-layer[data-depth="3"] {
+  width: 26vw;
+  height: 26vw;
+  max-width: 300px;
+  max-height: 300px;
+  top: 8%;
+  right: 12%;
+  border: 1px solid color-mix(in srgb, var(--gelatin) 30%, transparent);
+  background: transparent;
+}
+.depth-layer[data-depth="4"] {
+  width: 14vw;
+  height: 14vw;
+  max-width: 160px;
+  max-height: 160px;
+  bottom: 14%;
+  left: 8%;
+  border: 1px solid color-mix(in srgb, var(--mercury) 40%, transparent);
+  background: transparent;
+}
+.depth-layer[data-depth="5"] {
+  width: 6px;
+  height: 6px;
+  top: 20%;
+  left: 46%;
+  background: var(--tungsten);
+  box-shadow: 0 0 24px 6px color-mix(in srgb, var(--tungsten) 60%, transparent);
+}
+
+.hero {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mercury);
+  margin: 0 0 18px;
+}
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 0 0 22px;
+  color: var(--specular);
+}
+
+.headline .word {
+  display: inline-block;
+}
+
+.lede {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--specular) 82%, transparent);
+  max-width: 56ch;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.btn-primary,
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.18s var(--depth-ease), filter 0.18s var(--depth-ease);
+}
+
+.btn-primary {
+  background: var(--tungsten);
+  color: var(--well);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.btn-ghost {
+  border-color: color-mix(in srgb, var(--gelatin) 40%, transparent);
+  color: var(--specular);
+  background: transparent;
+}
+.btn-ghost:hover {
+  filter: brightness(1.15);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin: 0 0 8px;
+}
+
+.page-lede {
+  color: color-mix(in srgb, var(--specular) 78%, transparent);
+  max-width: 60ch;
+  margin: 0 0 36px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Plugins — source grid                                                   */
+/* ---------------------------------------------------------------------- */
+
+.source-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.source-card {
+  padding: 22px;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--mercury) 30%, transparent);
+  background: color-mix(in srgb, var(--chamber) 55%, transparent);
+}
+
+.source-id {
+  color: var(--tungsten);
+  font-size: 0.85rem;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.source-copy {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--specular) 80%, transparent);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Docs — endpoint list with clip-wipe rows                                */
+/* ---------------------------------------------------------------------- */
+
+.endpoint-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid color-mix(in srgb, var(--gelatin) 20%, transparent);
+}
+
+.endpoint-row {
+  display: grid;
+  grid-template-columns: 96px 220px 1fr;
+  gap: 16px;
+  padding: 14px 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--gelatin) 14%, transparent);
+  align-items: baseline;
+}
+
+.endpoint-method {
+  color: var(--mercury);
+  font-size: 0.78rem;
+}
+
+.endpoint-path {
+  color: var(--tungsten);
+  font-size: 0.85rem;
+}
+
+.endpoint-note {
+  color: color-mix(in srgb, var(--specular) 78%, transparent);
+  font-size: 0.9rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Velouri — contact sheet + chips + stage                                 */
+/* ---------------------------------------------------------------------- */
+
+.velouri-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) 1fr;
+  gap: 0;
+  min-height: calc(100vh - 68px);
+}
+
+.contact-sheet {
+  padding: 32px 28px;
+  border-right: 1px solid color-mix(in srgb, var(--gelatin) 16%, transparent);
+  overflow-y: auto;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--mercury) 45%, transparent);
+  background: transparent;
+  color: var(--specular);
+  font-size: 0.78rem;
+  text-transform: capitalize;
+  transition: background 0.18s var(--depth-ease), color 0.18s var(--depth-ease);
+}
+
+.chip-active {
+  background: var(--mercury);
+  color: var(--well);
+  border-color: var(--mercury);
+}
+
+.refresh-btn {
+  width: 100%;
+  padding: 10px 16px;
+  margin-bottom: 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--tungsten);
+  background: transparent;
+  color: var(--tungsten);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.api-error,
+.api-warning {
+  font-size: 0.85rem;
+  color: var(--tungsten);
+  margin: 0 0 14px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.contact-frame {
+  margin: 0;
+  border: 1px solid color-mix(in srgb, var(--gelatin) 22%, transparent);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--chamber);
+}
+
+.contact-frame img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.contact-frame figcaption {
+  font-size: 0.68rem;
+  padding: 6px 8px;
+  color: color-mix(in srgb, var(--specular) 70%, transparent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stage-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.resolution-row {
+  display: flex;
+  gap: 8px;
+  padding: 24px 28px 0;
+}
+
+.res-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--gelatin) 35%, transparent);
+  background: transparent;
+  color: var(--gelatin);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.res-active {
+  background: var(--tungsten);
+  color: var(--well);
+  border-color: var(--tungsten);
+}
+
+.stage-canvas-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.stage-canvas-wrap canvas {
+  touch-action: none;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Forms, prose (Settings, Login, Privacy, Terms, Data, About)             */
+/* ---------------------------------------------------------------------- */
+
+.prose-scene {
+  padding-top: 96px;
+}
+
+.prose p {
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--specular) 84%, transparent);
+  max-width: 68ch;
+}
+
+.settings-form,
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+}
+
+.settings-form label,
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--gelatin);
+}
+
+.settings-form input,
+.auth-form input {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--gelatin) 30%, transparent);
+  background: color-mix(in srgb, var(--well) 60%, transparent);
+  color: var(--specular);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.settings-form input:focus,
+.auth-form input:focus {
+  outline: 1px solid var(--tungsten);
+}
+
+.save-confirm {
+  color: var(--mercury);
+  font-size: 0.85rem;
+}
+
+.auth-status {
+  font-size: 0.85rem;
+  color: var(--tungsten);
+}
+
+@media (max-width: 860px) {
+  .velouri-layout {
+    grid-template-columns: 1fr;
+  }
+  .contact-sheet {
+    border-right: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--gelatin) 16%, transparent);
+  }
+  .stage-canvas-wrap {
+    min-height: 420px;
+  }
+}

@@ -1,0 +1,13 @@
+/* Design tokens — also seeded on spine design_preset "chamber-gelatin". */
+:root {
+  --chamber: #2c2a28;
+  --gelatin: #c4b8a5;
+  --mercury: #6e8b9a;
+  --tungsten: #c9a06a;
+  --well: #141312;
+  --specular: #f3ede3;
+
+  --font-display: "Syne", "Syne Fallback", sans-serif;
+  --font-body: "Figtree", "Figtree Fallback", sans-serif;
+  --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", monospace;
+}

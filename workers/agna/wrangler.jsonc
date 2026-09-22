@@ -1,0 +1,26 @@
+/**
+ * Worker A — serves the Agna SPA at agna.agnamo.com and proxies /v1/* and
+ * /mcp to the Supabase function origin (so apiBase === this domain works
+ * out of the box; see sites/www/src/lib/agnaApi.ts and lib/settings.ts).
+ *
+ * Pattern ported from canvas-two/wrangler.jsonc (the "flow" worker) — same
+ * assets + custom_domain shape, extended with a `main` script for the API
+ * proxy. For more details: https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "agna",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-09-23",
+  "assets": {
+    "directory": "../../sites/www/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "vars": {
+    "AGNA_FUNCTION_ORIGIN": "https://wieldveraqrbygapidlo.supabase.co/functions/v1/agna"
+  },
+  "routes": [
+    { "pattern": "agna.agnamo.com", "custom_domain": true }
+  ]
+}
