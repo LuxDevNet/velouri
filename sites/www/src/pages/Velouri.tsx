@@ -51,10 +51,8 @@ export default function Velouri() {
     setRefreshing(true);
     setError(null);
     try {
-      // NOTE: runCron is an admin-gated write once AGNA_ADMIN_KEY is set on
-      // the function — this anonymous SPA call will 401 in that mode until
-      // the refresh button is moved behind a signed-in/admin session. See
-      // TODO.md's security note.
+      // This remains an anonymous SPA call, so it surfaces backend auth
+      // errors inline.
       await agnaApi.runCron("velouri-gallery");
       const res = await agnaApi.galleryLane(filter, 24);
       setItems(res.items ?? []);

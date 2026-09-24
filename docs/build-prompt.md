@@ -230,7 +230,7 @@ ticks as chrome, gallery as a contact sheet.
 - `supabase/codice/001_register_agna.sql`
 - `supabase/functions/agna/src/{index,router,reshape,sources,store,mcp}.ts`
 - `sites/www/src/App.tsx`, `lib/settings.ts`, `lib/agnaApi.ts`, `components/VelouriStage.tsx`,
-  `components/AgnamoHeader.tsx`
+  `components/Nav.tsx`
 - `sites/www/src/pages/{Home,Velouri,Plugins,Docs,Settings,Login,Privacy,Terms,Data,About}.tsx`
 - `sites/www/public/_redirects` with `/* /index.html 200`
 - `docs/DATA.md`, `docs/SPINE.md`, `docs/PROMOTION.md`, `docs/build-prompt.md`

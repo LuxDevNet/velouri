@@ -14,8 +14,8 @@ export default function Privacy() {
           Nothing in Settings is sent to Postgres.
         </p>
         <p>
-          Login uses Supabase Auth against the agency project only. Agna never opens a second
-          Supabase project from the browser.
+          Login uses the configured Supabase project only. Agna never opens a second Supabase
+          project from the browser.
         </p>
       </div>
     </div>

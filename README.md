@@ -49,4 +49,4 @@ exposing either worker publicly. CORS is restricted to `PUBLIC_HOST` (default
 `https://agna.agnamo.com`, `https://velouri.agnamo.com`). See `docs/DATA.md`
 "Write-path auth" and `TODO.md` for the full note, including that the Velouri
 refresh button currently calls `runCron` anonymously and will 401 once the key is
-enforced, until that button moves behind a real session.
+enforced, unless refresh is moved to a backend-admin path.

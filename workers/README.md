@@ -40,17 +40,6 @@ npx wrangler deploy
 - **No `wrangler deploy` was run.** This session had no Cloudflare credentials, so
   both workers are configured but not live. `agna.agnamo.com` and
   `velouri.agnamo.com` do not resolve yet.
-- **No tile was registered on the live `agnamo.com` hub.** The cross-app header
-  (`sites/www/src/components/AgnamoHeader.tsx`, ported from
-  `canvas-two/src/components/layout/AgnamoHeader.tsx`) fetches
-  `https://agnamo.com/api/tiles` at runtime and falls back to a hardcoded list if
-  that fetch fails or doesn't include this app. Getting `agna` and `velouri`
-  tiles onto agnamo.com's actual `/api/tiles` response is owned by whichever repo
-  runs the Agnamo hub itself — that repo was not found under
-  `Z:\luxdev\dev\002 Tier Two Projects\` in this workspace, so it could not be
-  edited from here. Whoever owns that hub needs to add two tile rows, roughly:
-  `{ slug: "agna", name: "Agna", url: "https://agna.agnamo.com" }` and
-  `{ slug: "velouri", name: "Velouri", url: "https://velouri.agnamo.com" }`.
 - **`AGNA_ADMIN_KEY` is not set anywhere.** Until it is (as a `wrangler secret` on
   the Supabase function, not on these workers — the workers never see it), the
   cron write / gallery refresh / MCP mutation gate in
