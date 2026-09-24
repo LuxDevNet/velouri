@@ -91,7 +91,6 @@ cd workers/velouri && npm install && npx wrangler deploy
 ## Not this day
 
 - W8. Do not apply `supabase/codice/001_register_agna.sql`. Do not write CODICE. Do not freeze v1.0.0.
-- Agnamo hub tiles. The header already falls back when `https://agnamo.com/api/tiles` omits this app.
 - A schedule that calls `POST /v1/cron/:id/run`. First visit seeds the cache.
 - Signup, `verify_jwt` cutover, and any media host beyond the four named sources.
 

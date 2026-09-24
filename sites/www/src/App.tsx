@@ -1,6 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import AgnamoHeader from "./components/AgnamoHeader";
 import { Nav } from "./components/Nav";
 import About from "./pages/About";
 import Data from "./pages/Data";
@@ -16,7 +15,6 @@ import Velouri from "./pages/Velouri";
 export default function App() {
   return (
     <div className="app-shell">
-      <AgnamoHeader />
       <Nav />
       <main className="app-main">
         <Routes>

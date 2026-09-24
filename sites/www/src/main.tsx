@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import "./styles/tokens.css";
-import "./components/agnamo-header.css";
 import "./styles/global.css";
 
 const rootEl = document.getElementById("root");

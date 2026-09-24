@@ -17,7 +17,7 @@ list for tracking progress during the build.
       in-memory fallback.
 - [x] **W5** — Vite routes, settings v1 (`agna.settings.v1`), API client with
       apiBase→originBase→env precedence, Supabase login on agency only.
-- [x] **W6** — Home/Plugins/Docs 2.5D identity + motion; Agnamo cross-app header ported.
+- [x] **W6** — Home/Plugins/Docs 2.5D identity + motion.
 - [x] **W7** — Velouri contact sheet + R3F stage; acceptance curls.
 - [ ] **W8** — Register `spine.agna`, models, agents on CODICE, then freeze v1.0.0
       (`supabase/codice/001_register_agna.sql` is written but **not applied** — no
@@ -50,13 +50,11 @@ also be reviewed for `verify_jwt` / gateway auth once the SPA has real sessions 
 `nitemcp/docs/ROLLOUT.md` for the staged-auth-cutover pattern this project should
 eventually follow). `runCron` is currently called from the anonymous SPA (the Velouri
 refresh button) — that call will 401 once `AGNA_ADMIN_KEY` is enforced in production
-unless the button is moved behind a signed-in/admin gate first.
+unless refresh is moved to a backend-admin path first.
 
 ## Out of this pass
 
 - Actually running `wrangler deploy` (no Cloudflare account access from this session).
-- Registering `agna` / `velouri` tiles on the live `agnamo.com` hub's `/api/tiles` —
-  that registry is owned by the Agnamo hub app, which is not in this workspace.
 - Filling anon, service-role, Unsplash, Pexels, portrait URL, and admin-key secrets.
 - Agency vault and `Worker aoumai-auth` (superseded — no worker-side auth built yet).
 - Any media host beyond the four named sources.
